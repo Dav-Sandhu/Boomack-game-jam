@@ -1,0 +1,66 @@
+[Story]
+-> Your ship was damaged on an expedition to
+another space colony
+-> Your ship is running out of power 
+-> you have to get back to earth before power
+runs out
+[Plan]
+[Cutscenes]
+-> make various images for the opening and ending of
+ the game
+SCENES:
+  -> A Boomnack logo
+	Opening:
+	-> A ship in space moving in
+	a general direction
+	-> An astroid hitting the ship
+	-> A person looking at a power meter
+	(because the power was damaged)
+	(have him look at a high tech computer)
+	Closing:
+	-> The astronaughts are celebrating
+	-> The ship is facing its back at us
+	heading towards Earth 
+[Main Images] 
+-> Meters (To the side)
+	-> Health
+	-> Sanity
+	-> Power
+	-> Turn
+	-> Crew
+	(each with a select key)
+-> Design a ship with different rooms
+	-> A Power room in the middle
+	-> 4 side rooms for managing
+	food, health, currency room (for 
+	trade), and a main entrance to 
+	defend against intruders  
+
+[Characters]
+->	design various faceless characters 
+->	just have them facing the player no
+	animations neccessary
+
+[Enemies]
+-> tend to steal from your ship
+-> you can send a crew member to 
+fight against them but he will lose health
+-> make different enemies from human (space pirates)
+to your own interpretation of aliens, just dont copy
+other peoples ideas of aliens
+
+[Backgrounds]
+-> design different space backgrounds
+-> design an Earth background
+
+[Menus]
+-> A Pause Menu
+  -> Quit
+  -> Resume
+-> A Main Menu
+  -> Start
+  -> Quit
+  
+[Point of Game]
+-> The point of the game is to make it back to Earth or to
+survive as long as possible
