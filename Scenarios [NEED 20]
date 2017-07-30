@@ -31,7 +31,6 @@ exploring:
 [1-5] medkits 50% chance
 [1-10] food 50% chance
 4.
-[25%] TRAP
 [75%]
 QUEST:
 "You find a wandering Alien"
@@ -41,6 +40,36 @@ can you please escort me for the next 200U"
 "I'll reward you 5 power if you do so"
 [Alien consumes extra food]
 [Ignore]
+[25%] TRAP "It was a trap, the Alien has looted your power" [-2 power]
 5.
 "There appears to be a radiation field ahead"
 -2X Power for day
+6.
+
+7.
+
+8.
+
+9.
+
+10.
+
+11.
+
+12.
+
+13.
+
+14.
+
+15.
+
+16.
+
+17.
+
+18.
+
+19.
+
+20.
