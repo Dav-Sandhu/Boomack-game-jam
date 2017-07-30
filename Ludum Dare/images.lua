@@ -14,7 +14,9 @@ local images = {
 	pause_menu_1 = love.graphics.newImage('img/menus/pause_menu1.jpg'),
 	pause_menu_2 = love.graphics.newImage('img/menus/pause_menu2.jpg'),
 	
-	ship = love.graphics.newImage('img/background/ship.png') 
+	b1 = love.graphics.newImage('img/background/b1.jpg'),	--backgrounds
+	ship = love.graphics.newImage('img/background/ship.png')
+	
 	--c1 = love.graphics.newImage('img/cutscenes/c1.png'), --cutscenes
 	--c2 = love.graphics.newImage('img/cutscenes/c2.png'),
 	--c3 = love.graphics.newImage('img/cutscenes/c3.png'),
