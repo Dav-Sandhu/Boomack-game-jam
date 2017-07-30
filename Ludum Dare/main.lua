@@ -15,7 +15,7 @@ end
 
 function love.draw()
 
-	love.graphics.scale(width/160,height/90)
+	--love.graphics.scale(width/160,height/90)
 	love.graphics.setFont(love.graphics.newFont(5))
 	if event == 1 then 
 		love.graphics.draw(images.logo, 0, 0)
@@ -86,22 +86,19 @@ function controls(dt)
 			deltaTime = 0
 		end
 		
-		if  love.keyboard.isDown("1") and deltaTime >= 0.1 then --hunger
+		if  (love.keyboard.isDown("return") or love.keyboard.isDown("space")) and deltaTime >= 0.1 then
 			deltaTime = 0
-		elseif love.keyboard.isDown("2") and deltaTime >= 0.1 then --currency
-			deltaTime = 0
-			
-			new_day = true
-			
-			const.day = const.day + 1
-			const.power = const.power - 1
-			
-		elseif love.keyboard.isDown("3") and deltaTime >= 0.1 then --health
-			deltaTime = 0
-		elseif love.keyboard.isDown("4") and deltaTime >= 0.1 then --sanity
-			deltaTime = 0
-		elseif love.keyboard.isDown("5") and deltaTime >= 0.1 then --crew
-			deltaTime = 0
+			if menu_select == 1 then	--crew
+				
+			elseif menu_select == 2 then	--map
+				
+			elseif menu_select == 3 then	--power
+				
+			elseif menu_select == 4 then	--cargo
+				
+			elseif menu_select == 5 then	--time
+				
+			end
 		end
 	end
 	
