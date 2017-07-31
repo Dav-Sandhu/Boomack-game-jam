@@ -281,8 +281,17 @@ function love.draw()
 		end
 		
 	elseif event == 4 then
-		love.graphics.draw(images.c6, 0, 0)
-		love.graphics.print("You ran out of power and got stranded!", 0, 0)
+		if const.power == 0 then
+			love.graphics.draw(images.c6, 0, 0)
+			love.graphics.print("You ran out of power and got stranded!", 0, 0)
+		else
+			love.graphics.draw(images.c7, 0, 0)
+			love.graphics.print("Your crew all died!", 0, 0)
+		end
+	elseif event == 11 then
+		love.graphics.draw(images.tutorial, 0, 0)
+	elseif event == 12 then
+		love.graphics.draw(images.tutorial2, 0, 0)
 	end
 end
 
@@ -305,6 +314,16 @@ function controls(dt)
 			else
 				love.event.quit()
 			end
+		end
+	elseif event == 11 then
+		if (love.keyboard.isDown("return") or love.keyboard.isDown("space")) and deltaTime >= 1 then
+			event = 12
+			deltaTime = 0
+		end
+	elseif event == 12 then
+		if (love.keyboard.isDown("return") or love.keyboard.isDown("space")) and deltaTime >= 1 then
+			event = 2
+			deltaTime = 0
 		end
 	elseif event == 3 then
 	
@@ -552,6 +571,8 @@ function love.update(dt)
 			pirates = true
 			numofpirates = math.random(1,3)
 			enemies.health = 10*numofpirates
+		else
+			pirates = false
 		end
 	end
 	
@@ -562,7 +583,7 @@ function love.update(dt)
 	if const.power == 0 then event = 4 end
 	
 	if event == 1 and deltaTime >= 2 then 	--used to wait 2 seconds before switching over to the next event
-		event = 2
+		event = 11
 		deltaTime = 0
 	end
 	
@@ -636,5 +657,10 @@ function love.update(dt)
 			chr[i].health = 0
 		end
 		i = i + 1
+	end
+	
+	const.crew = const.room1 + const.room2 + const.room3 + const.room4
+	if const.crew == 0 then
+		event = 4
 	end
 end

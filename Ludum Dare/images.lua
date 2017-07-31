@@ -46,6 +46,9 @@ local images = {
 	
 	textbox = love.graphics.newImage('img/background/textbox.png'),
 	
+	tutorial = love.graphics.newImage('img/other/tutorial_1.png'),
+	tutorial2 = love.graphics.newImage('img/other/tutorial_2.png'),
+	
 	c1 = love.graphics.newImage('img/cutscenes/c1.png'), --cutscenes
 	c2 = love.graphics.newImage('img/cutscenes/c2.png'),
 	c3 = love.graphics.newImage('img/cutscenes/c3.png'),
