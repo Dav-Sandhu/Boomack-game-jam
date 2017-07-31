@@ -3,14 +3,11 @@ local images = require('images')
 local const = require('const')
 local chr = require('char')
 local shop = require('shop')
+local enemies = require('enemies')
 
 function sub_menu_close()
 	sub_menu = false
 	crew_menu = false
-	map_menu = false
-	power_menu = false
-	cargo_menu = false
-	time_menu = false
 end
 
 function love.load()
@@ -20,24 +17,48 @@ function love.load()
 	menu_select = 1
 	menu_select2 = 1
 	
+	scenario = 0
+	
 	item = 1
 	
 	deltaTime = 0
 	deltaTime2 = 0
 	deltaTime3 = 0
+	deltaTime4 = 0
+	deltaTime5 = 0
 	
 	sub_menu_close()
+	
+	victory = 0
 	
 	new_scenario = false
 	new_day = false
 	pause = false
+	pirates = false
+	skip = false
 	
 	math.randomseed(os.time())
+	
+	numofpirates = math.random(1,3)
 	
 	shop.power = math.random(0, 2)
 	shop.food = math.random(5, 15)
 	shop.med = math.random(5, 15)
 	
+end
+
+function pawns(p, c1, c2)
+	if p == 1 then
+		love.graphics.draw(images.pawn, c1, c2)
+	elseif p == 2 then
+		love.graphics.draw(images.pawn2, c1, c2)
+	elseif p == 3 then
+		love.graphics.draw(images.pawn3, c1, c2)
+	elseif p == 4 then
+		love.graphics.draw(images.pawn4, c1, c2)
+	elseif p == 5 then
+		love.graphics.draw(images.pawn5, c1, c2)
+	end
 end
 
 function love.draw()
@@ -57,27 +78,56 @@ function love.draw()
 		love.graphics.draw(images.b1, 0, 0)
 		love.graphics.draw(images.ship, 0, 0)
 		
+		if pirates == true then
+			love.graphics.draw(images.pirate, 16, 16)
+			love.graphics.draw(images.ship_danger, 0, 0)
+			love.graphics.print("Your Ship is under attack by "..numofpirates.." pirate(s)!", 280, 670)
+			
+		end
+		
 		if menu_select == 1 and sub_menu == false then
 			love.graphics.draw(images.action_menu_1, 0, 0)
-			--love.graphics.print("Power Room: "..const.room1, 980, 0)
-			--love.graphics.print("Food Room: "..const.room2, 980, 50)
-			--love.graphics.print("Heal Room: "..const.room3, 980, 100)
-			--love.graphics.print("Defence Room: "..const.room4, 980, 150)
+			love.graphics.print("Power Room: "..const.room1, 280, 16)
+			love.graphics.print("Food Room: "..const.room2, 280, (50+16))
+			love.graphics.print("Heal Room: "..const.room3, 280, (100+16))
+			love.graphics.print("Defence Room: "..const.room4, 280, (150+16))
 		elseif menu_select == 2 and sub_menu == false then
 			love.graphics.draw(images.action_menu_2, 0, 0)
-			--love.graphics.print("Distance: "..const.distance, 980, 0)
+			love.graphics.print("Distance: "..const.distance.."/1500", 280, 16)
 		elseif menu_select == 3 and sub_menu == false then
 			love.graphics.draw(images.action_menu_3, 0, 0)
-			--love.graphics.print("Power: "..const.power, 980, 0)
+			love.graphics.print("Power: "..const.power, 280, 16)
 		elseif menu_select == 4 and sub_menu == false then
 			love.graphics.draw(images.action_menu_4, 0, 0)
-			--love.graphics.print("Currency: "..const.currency, 980, 0)
-			--love.graphics.print("Food: "..const.food, 980, 50)
-			--love.graphics.print("Med: "..const.med, 980, 100)
+			love.graphics.print("Currency: "..const.currency, 280, 16)
+			love.graphics.print("Food: "..const.food, 280, (50+16))
+			love.graphics.print("Med: "..const.med, 280, (100+16))
 		elseif menu_select == 5 and sub_menu == false then
 			love.graphics.draw(images.action_menu_5, 0, 0)
-			--love.graphics.print("Day: "..const.day, 980, 50)
-			--love.graphics.print("Time: "..60-const.timer, 980, 0)
+			love.graphics.print("Day: "..const.day, 280, 16)
+			love.graphics.print("Time: "..30-const.timer, 280, (50+16))
+			love.graphics.print("Press Enter to Skip to next day", 280, (100+16))
+		end
+	
+		pawns(const.room1, 856, 288)
+		pawns(const.room2, 696, 128)
+		pawns(const.room3, 696, 448)
+		pawns(const.room4, 696, 288)
+		
+		if victory == 1 then
+			love.graphics.draw(images.textbox, 0, 0)
+			--love.graphics.setFont(love.graphics.newFont(50))
+			love.graphics.setColor(0, 0, 0)
+			love.graphics.print("You beat the enemies, some loot was added!", 280+10, 670/2)
+			love.graphics.setColor(255, 255, 255)
+			--love.graphics.setFont(love.graphics.newFont(25))
+		elseif victory == 2 then
+			love.graphics.draw(images.textbox, 0, 0)
+			--love.graphics.setFont(love.graphics.newFont(50))
+			love.graphics.setColor(0, 0, 0)
+			love.graphics.print("You lost to the enemies, some loot was stolen!", 280+10, 670/2)
+			love.graphics.setColor(255, 255, 255)
+			--love.graphics.setFont(love.graphics.newFont(25))
 		end
 		
 		if sub_menu == true then
@@ -173,18 +223,7 @@ function love.draw()
 					end
 				elseif menu_select == 6 then
 					love.graphics.draw(images.crew_menu_6, 272, 0)
-				end
-			elseif map_menu == true then
-				love.graphics.draw(images.action_menu_2, 0, 0)
-			elseif power_menu == true then
-				love.graphics.draw(images.action_menu_3, 0, 0)
-				
-			elseif cargo_menu == true then
-				love.graphics.draw(images.action_menu_4, 0, 0)
-				
-			elseif time_menu == true then
-				love.graphics.draw(images.action_menu_5, 0, 0)
-				
+				end				
 			end
 		end
 		
@@ -208,10 +247,28 @@ function love.draw()
 				love.graphics.print("You Have: "..const.currency, 900, 150)
 				love.graphics.setColor(255, 255, 255)
 				love.graphics.setFont(love.graphics.newFont(25))
-			elseif scenario == 4 or scenario == 5 or scenario == 6 then
 			elseif scenario == 7 then
+				love.graphics.draw(images.textbox, 0, 0)
+				--love.graphics.setFont(love.graphics.newFont(50))
+				love.graphics.setColor(0, 0, 0)
+				love.graphics.print("You've found an ruin of an old ship, inside was some fuel!", 280+10, 670/2)
+				love.graphics.setColor(255, 255, 255)
+				--love.graphics.setFont(love.graphics.newFont(25))
 			elseif scenario == 8 then
+				love.graphics.draw(images.textbox, 0, 0)
+				--love.graphics.setFont(love.graphics.newFont(50))
+				love.graphics.setColor(0, 0, 0)
+				love.graphics.print("A local alien sends his regards with some food!", 280+10, 670/2)
+				love.graphics.setColor(255, 255, 255)
+				--love.graphics.setFont(love.graphics.newFont(25))
+				love.graphics.draw(images.alien, 16, 16)
 			elseif scenario == 9 or scenario == 10 then
+				love.graphics.draw(images.textbox, 0, 0)
+				--love.graphics.setFont(love.graphics.newFont(50))
+				love.graphics.setColor(0, 0, 0)
+				love.graphics.print("You found a ship that lost a battle, inside was some medical  equipment!", 280+10, 670/2)
+				love.graphics.setColor(255, 255, 255)
+				--love.graphics.setFont(love.graphics.newFont(25))
 			end
 		end
 		
@@ -276,7 +333,7 @@ function controls(dt)
 		end
 		
 		if love.keyboard.isDown("up") and deltaTime >= 0.1 then
-			if pause == false and sub_menu == false and new_day == false then
+			if pause == false and sub_menu == false and (new_day == false or pirates == true) then
 				if menu_select > 1 then
 					menu_select = menu_select - 1
 				else	
@@ -309,7 +366,7 @@ function controls(dt)
 		end
 		
 		if love.keyboard.isDown("down") and deltaTime >= 0.1 then
-			if pause == false and sub_menu == false and new_day == false then
+			if pause == false and sub_menu == false and (new_day == false or pirates == true) then
 				if menu_select < 5 then
 					menu_select = menu_select + 1
 				else	
@@ -341,28 +398,14 @@ function controls(dt)
 			deltaTime = 0
 		end
 		
-		if  love.keyboard.isDown("return") and deltaTime >= 0.1 and pause == false and new_day == false then
+		if  love.keyboard.isDown("return") and deltaTime >= 0.1 and pause == false and (new_day == false or pirates == true) then
 			deltaTime = 0
 			if menu_select == 1 and sub_menu == false then	--crew
 				crew_menu = true
 				sub_menu = true
 				menu_select = 1
-			elseif menu_select == 2 and sub_menu == false then	--map
-				map_menu = true
-				sub_menu = true
-				menu_select = 1
-			elseif menu_select == 3 and sub_menu == false then	--power
-				power_menu = true
-				sub_menu = true
-				menu_select = 1
-			elseif menu_select == 4 and sub_menu == false then	--cargo
-				cargo_menu = true
-				sub_menu = true
-				menu_select = 1
-			elseif menu_select == 5 and sub_menu == false then	--time
-				time_menu = true
-				sub_menu = true
-				menu_select = 1
+			elseif menu_select == 5 and sub_menu == false then
+				skip = true
 			end
 			
 			if sub_menu == true and crew_menu == true then
@@ -405,13 +448,14 @@ function controls(dt)
 					shop.med = math.random(5, 15)
 					new_day = false
 				end
-			elseif scenario == 4 or scenario == 5 or scenario == 6 then	--pirates
+			elseif scenario == 7 then
+				const.power = const.power + math.random(1, 3)
 				new_day = false
-			elseif scenario == 7 then									--Quest
+			elseif scenario == 8 then			
+				const.food = const.food + math.random(5, 10)
 				new_day = false
-			elseif scenario == 8 then									--Loot
-				new_day = false
-			elseif scenario == 9 or scenario == 10 then					--forced trade
+			elseif scenario == 9 or scenario == 10 then
+				const.med = const.med + math.random(5, 10)
 				new_day = false
 			end
 			deltaTime = 0
@@ -438,7 +482,26 @@ function food_room(p, dt)
 end
 
 function defence_room(p, dt)
-	--intruders
+	if pirates == true then
+		if deltaTime5 >= 2 then
+			p.health = p.health - enemies.atk*numofpirates
+			enemies.health = enemies.health - p.atk
+			deltaTime5 = 0
+		end
+		if enemies.health <= 0 then 
+			pirates = false
+			new_day = false
+			victory = 1
+			if math.random(0,1) == 1 then
+				const.power = const.power + math.random(0,1)
+				const.currency = const.currency + math.random(50,100)
+			else
+				const.food = const.food + math.random(0,5)
+				const.med = const.med +math.random(0,5)
+				const.currency = const.currency + math.random(5, 25)
+			end
+		end
+	end
 end
 
 function room_check(p, n, dt)
@@ -462,7 +525,7 @@ function ship(dt)
 	const.room2 = 0
 	const.room3 = 0
 	const.room4 = 0
-	while (i <= 5) do
+	while (i <= table.getn(chr)) do
 		if chr[i].status == 1 then
 			room_check(chr[i], chr[i].loc, dt)
 		end
@@ -476,12 +539,20 @@ function love.update(dt)
 	deltaTime = deltaTime + dt
 	deltaTime2 = deltaTime2 + dt
 	deltaTime3 = deltaTime3 + dt
+	deltaTime4 = deltaTime4 + dt
+	deltaTime5 = deltaTime5 + dt
 	
 	controls(dt)
 	
 	if new_day == true and new_scenario == true then
 		scenario = math.random(1, 10)
+		sub_menu = false
 		new_scenario = false
+		if scenario == 4 or scenario == 5 or scenario == 6 then
+			pirates = true
+			numofpirates = math.random(1,3)
+			enemies.health = 10*numofpirates
+		end
 	end
 	
 	if event == 4 and deltaTime >= 2 then	--you lose
@@ -498,20 +569,42 @@ function love.update(dt)
 	const.crew = #chr
 	
 	if event == 3 then
-		if const.timer < 60 and deltaTime2 >= 1 and pause == false then --1 min = time limit
+		if const.timer < 30 and deltaTime2 >= 1 and pause == false and skip == false then 
 			const.timer = const.timer + 1
 			ship(dt)
 			deltaTime2 = 0
-		elseif const.timer >= 60 then
+		elseif const.timer >= 15 and pirates == true then
+			pirates = false
+			new_day = false
+			const.power = const.power - 1
+		elseif const.timer >= 30 or skip == true then
 			const.timer = 0
+			local i = 1
+			while (i <= table.getn(chr)) do
+				if chr[i].hunger >= 2 then
+					chr[i].hunger = chr[i].hunger - 2
+				else
+					if chr[i].health >= 2 then
+						chr[i].health = chr[i].health - 2
+					else
+						chr[i].health = 0
+					end
+				end
+				i = i + 1
+			end
 			new_day = true
 			new_scenario = true
+			skip = false
 			const.day = const.day + 1
 			const.power = const.power - 1
 		end
 		
-		if const.distance >= 2000 then
-			--win
+		if const.timer >= 15 and scenario > 6 then
+			new_day = false
+		end
+		
+		if const.distance >= 1500 and deltaTime5 >= 5 then
+			love.event.quit()
 		end
 	end
 	
@@ -520,4 +613,28 @@ function love.update(dt)
 		deltaTime3 = 0
 	end
 	
+	if pirates == true and  deltaTime4 >= 5 then
+		if const.med >= 1 then
+			const.med = const.med - 1
+		end
+		if const.food >= 1 then
+			const.food = const.food - 1
+		end
+		deltaTime4 = 0
+	end
+	
+	if (victory == 1 or victory == 2) and deltaTime5 >= 5 then
+		victory = 0
+		deltaTime5 = 0
+	end
+	
+	local i = 1
+	
+	while (i <= table.getn(chr)) do
+		if chr[i].health <= 0 then
+			chr[i].status = 0
+			chr[i].health = 0
+		end
+		i = i + 1
+	end
 end

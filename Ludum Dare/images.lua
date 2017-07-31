@@ -17,6 +17,8 @@ local images = {
 	b1 = love.graphics.newImage('img/background/b1.jpg'),	--backgrounds
 	ship = love.graphics.newImage('img/background/ship.png'),
 	
+	ship_danger = love.graphics.newImage('img/background/ship_danger.png'),
+	
 	crew_menu_1 = love.graphics.newImage('img/menus/crew_menu1.jpg'), --crew menu
 	crew_menu_2 = love.graphics.newImage('img/menus/crew_menu2.jpg'),
 	crew_menu_3 = love.graphics.newImage('img/menus/crew_menu3.jpg'),
@@ -35,6 +37,14 @@ local images = {
 	alien = love.graphics.newImage('img/other/alien.jpg'),
 	pirate = love.graphics.newImage('img/other/pirate_symbol.jpg'),
 	merchant = love.graphics.newImage('img/other/merchant.jpg'),
+	
+	pawn = love.graphics.newImage('img/other/pawn.png'),
+	pawn2 = love.graphics.newImage('img/other/pawn2.png'),
+	pawn3 = love.graphics.newImage('img/other/pawn3.png'),
+	pawn4 = love.graphics.newImage('img/other/pawn4.png'),
+	pawn5 = love.graphics.newImage('img/other/pawn5.png'),
+	
+	textbox = love.graphics.newImage('img/background/textbox.png'),
 	
 	c1 = love.graphics.newImage('img/cutscenes/c1.png'), --cutscenes
 	c2 = love.graphics.newImage('img/cutscenes/c2.png'),
